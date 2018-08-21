@@ -7,6 +7,7 @@ package fr.univ_tours.li.mdjedaini.ideb.struct;
 import fr.univ_tours.li.mdjedaini.ideb.olap.result.Result;
 import fr.univ_tours.li.mdjedaini.ideb.olap.result.EAB_Cell;
 import fr.univ_tours.li.mdjedaini.ideb.olap.query.Query;
+import fr.univ_tours.li.mdjedaini.ideb.olap.query.QuerySql;
 import fr.univ_tours.li.mdjedaini.ideb.olap.query.QueryTriplet;
 import fr.univ_tours.li.mdjedaini.ideb.user.User;
 import java.util.ArrayList;
@@ -81,9 +82,11 @@ public class Log {
      */
     public void addSession(Session arg_session) {
         
-        // convert queries of the session before adding it to the log
-        arg_session.convertQueries();
-        
+        // convert queries of the session before adding it to the log 
+    	// if it's not an SQL query
+    	if(!(arg_session.getFirstQuery() instanceof QuerySql)) {
+    		arg_session.convertQueries();
+    	}
         arg_session.setSid(this.sid);
         this.sid++;
         

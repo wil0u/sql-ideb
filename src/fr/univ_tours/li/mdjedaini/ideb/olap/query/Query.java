@@ -38,6 +38,9 @@ public abstract class Query {
      *
      * @return
      */
+    
+    public Query() {}
+    
     public Integer getPosition() {
         return position;
     }

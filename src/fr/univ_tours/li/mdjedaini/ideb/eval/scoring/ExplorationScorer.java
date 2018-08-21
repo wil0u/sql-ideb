@@ -9,6 +9,7 @@ import fr.univ_tours.li.mdjedaini.ideb.BenchmarkEngine;
 import fr.univ_tours.li.mdjedaini.ideb.algo.I_FocusDetector;
 import fr.univ_tours.li.mdjedaini.ideb.eval.Exploration;
 import fr.univ_tours.li.mdjedaini.ideb.eval.metric.Metric;
+import fr.univ_tours.li.mdjedaini.ideb.olap.query.QuerySql;
 import fr.univ_tours.li.mdjedaini.ideb.olap.result.EAB_Cell;
 import fr.univ_tours.li.mdjedaini.ideb.struct.AbstractDiscovery;
 import java.util.ArrayList;
@@ -100,8 +101,9 @@ public class ExplorationScorer implements I_ExplorationScorer {
         arg_tr.getWorkSession().prepare();
         
         // uses the focus detection for computing focus zone
-        arg_tr.computeFocusZone(this.focusDetection);
-                
+        if(!(arg_tr.getWorkSession().getFirstQuery() instanceof QuerySql)) {
+        	arg_tr.computeFocusZone(this.focusDetection);
+        }
         List<Thread> threadList = new ArrayList<>();
         
         for(Metric m_tmp : this.metricList) {

@@ -47,8 +47,7 @@ public class FalsetoQueryConverter {
                 be.parameters.cubeName,
                 be.parameters.driver,
                 be.parameters.jdbcUrl,
-                be.parameters.user,
-                be.parameters.password);
+                be.parameters.user);
         
         try {
             // ceci est une connexion Falseto...
@@ -70,8 +69,8 @@ public class FalsetoQueryConverter {
         QueryTriplet arg_qt = (QueryTriplet)arg_q;
         
         Qfset result    = new Qfset();
-        result.cubeName = arg_qt.getCube().getName();
-        result.cube     = arg_qt.getCube().getMondrianCube();
+        //result.cubeName = arg_qt.getCube().getName();
+        //result.cube     = arg_qt.getCube().getMondrianCube();
         
         for(MeasureFragment mf_tmp : arg_qt.getMeasures()) {
             result.addMeasure(mf_tmp.getMeasure().getMondrianMeasure());

@@ -44,8 +44,9 @@ public class TestEvaluation {
     
         TestEvaluation test = new TestEvaluation();
         
-        test.evaluateCubeloadLog();
-//        test.evaluateDopanLog("res/dopan/cleanLogs/dibstudent04--2016-09-25--21-46.log");
+        //test.evaluateCubeloadLog();
+      
+        test.evaluateDopanLog("res/dopan/cleanLogs/dibstudent04--2016-09-25--21-46.log");
         //test.evaluateDopanLog("res/dopan/cleanLogs/dibstudent07--2016-09-27--20-11.log");
         
     }
@@ -63,6 +64,8 @@ public class TestEvaluation {
         params.jdbcUrl          = "jdbc:sqlserver://10.195.25.10:54027";
         params.user             = "mahfoud";
         params.password         = "AvH4My327-vd";
+        //params.password			= "lecture";
+        //params.user				= "dibreader";
         params.schemaFilePath   = "res/dopan/dopan_dw3.xml";
         
         BenchmarkEngine be  = new BenchmarkEngine(params);
@@ -76,12 +79,13 @@ public class TestEvaluation {
         //ExplorationScorer es    = new ExplorationScorer(be, new FocusOnFirstQuery());
         ExplorationScorer es    = new ExplorationScorer(be, new DistanceBasedFocusDetection());
         
-        //es.addMetric(new MetricTaskSuccessPrimary(be));
-        //es.addMetric(new MetricTaskSuccessSecondary(be));
+        es.addMetric(new MetricTaskSuccessPrimary(be));
+        es.addMetric(new MetricTaskSuccessSecondary(be));
         //es.addMetric(new MetricIterativeRecall(be));
         //es.addMetric(new MetricIterativeDistance(be));
         //es.addMetric(new MetricClickDepth(be));
         es.addMetric(new MetricRelevantNewInformation(be));
+        
         
         // pick a random session from the log and execute it
 //        SaikuLogLoader  sll = new SaikuLogLoader(be, arg_logFile);
