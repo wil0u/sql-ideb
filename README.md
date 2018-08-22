@@ -3,7 +3,7 @@
 Initially, this project is a proof of concept realised by Mahfoud DJEDAINI in the context of his Phd. The original project is located at https://github.com/mdjedaini/ideb. 
 It basacally allows the user to create new Interactive Database Exploration systems and compare them to analoguous systems that already exist within the benchmark. This comparison is done thanks to pre-defined or user defined metrics.
 The project has been built in the form of a java API that the user can use as he/she wants. 
-On the version of this project, the java API has been modified in order to take into account the SQL query evaluation. In other words, the modifications concern only a small part of this quite large project. A detail of the changes is described further in this documentation.
+In this modified version, the java API has been changed in order to take into account the SQL query evaluation. In other words, the modifications concern only a small part of this quite large project. A detail of the changes is described further in this documentation.
 
 ## Getting Started
 
@@ -46,6 +46,92 @@ The class TestExplorationSql has been add to this package. It is a main class th
 If you want an exhaustif list of the code changes check this : https://github.com/wil0u/sql-ideb/commit/1c166761ea46fc5b677b580528d5eb3d3a76c9f5
 
 
+### How to use
+
+Create a new main class in the java project. Then, in this main you can start use the built-in object and method that are present in the API. 
+
+For example let's say that my use case is to evaluate SQL exploration thanks to predefined metrics and then generate a file that gather this metrics for each query.
+
+First of all you need to instanciate an XmlSqlLoader that generate a Log object containing this SQL explorations :
+
+```
+
+XmlSqlLoader myLoader = new XmlSqlLoader();
+Log myLog = myLoader.loadLog();
+
+```
+
+Then instanciate all the metrics that you want for the evaluation :
+
+```
+
+NumberOfProjections metricNumberOfProjections = new NumberOfProjections(be);
+NumberOfSelections metricNumberOfSelections = new NumberOfSelections(be);
+NumberOfTables metricNumberOfTables = new NumberOfTables(be);
+NumberOfAggregationFunctions metricNumberOfAggregationFunctions = new NumberOfAggregationFunctions(be);
+CommonNumberOfProjections metricCommonNumberOfProjections = new CommonNumberOfProjections(be);
+CommonNumberOfSelections metricCommonNumberOfSelections = new CommonNumberOfSelections(be);
+CommonNumberOfAggregationFunctions metricCommonNumberOfAggregationFunctions = new CommonNumberOfAggregationFunctions(be);
+CommonNumberOfTables metricCommonNumberOfTables = new CommonNumberOfTables(be);
+        
+
+```
+Add them to an object ExplorationScorer.
+
+```
+Parameters params   = new Parameters();
+BenchmarkEngine be  = new BenchmarkEngine(params);
+ExplorationScorer es    = new ExplorationScorer(be);
+es.addMetric(metricNumberOfProjections);
+es.addMetric(metricNumberOfSelections);
+es.addMetric(metricNumberOfTables);
+es.addMetric(metricNumberOfAggregationFunctions);
+es.addMetric(metricCommonNumberOfProjections);
+es.addMetric(metricCommonNumberOfSelections);
+es.addMetric(metricCommonNumberOfAggregationFunctions);
+es.addMetric(metricCommonNumberOfTables);
+```
+
+Evaluate each query in each exploration and write it in a file :
+
+```
+String SAMPLE_CSV_FILE = "sample.csv";
+BufferedWriter writer = Files.newBufferedWriter(Paths.get(SAMPLE_CSV_FILE));
+
+CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                .withHeader("ID",metricNumberOfProjections.getName(),metricNumberOfTables.getName(),metricNumberOfAggregationFunctions.getName(),metricNumberOfSelections.getName(),metricCommonNumberOfProjections.getName(),metricCommonNumberOfSelections.getName(),metricCommonNumberOfAggregationFunctions.getName(),metricCommonNumberOfTables.getName()));          
+        
+int queryId;
+double valueProjectionsMetric;
+double valueTablesMetric;
+double valueAggregationFunctionsMetric;
+double valueSelectionsMetric;
+double valueCommonProjectionsNumber;
+double valueCommonSelectionsNumber;
+double valueCommonAggregationFunctionsNumber;
+double valueCommonTablesNumber;
+QuerySql q;
+		
+for (Session sess : myLog.getSessionList()) {
+   Exploration e = new Exploration(be,sess);
+			ExplorationScore explorationScore = es.score(e);
+			System.out.println(explorationScore);
+			for(int k = 0; k < explorationScore.getExploration().getWorkSession().queryList.size(); k++) {
+				q = (QuerySql) explorationScore.getExploration().getWorkSession().queryList.get(k);
+				queryId = explorationScore.getExploration().getWorkSession().queryList.get(k).getQid();
+				valueProjectionsMetric = explorationScore.queryToMetricScoreList.get(k).get(metricNumberOfProjections);
+				valueTablesMetric = explorationScore.queryToMetricScoreList.get(k).get(metricNumberOfTables);
+				valueAggregationFunctionsMetric = explorationScore.queryToMetricScoreList.get(k).get(metricNumberOfAggregationFunctions);
+				valueSelectionsMetric = explorationScore.queryToMetricScoreList.get(k).get(metricNumberOfSelections);
+				valueCommonProjectionsNumber = explorationScore.queryToMetricScoreList.get(k).get(metricCommonNumberOfProjections);
+				valueCommonSelectionsNumber = explorationScore.queryToMetricScoreList.get(k).get(metricCommonNumberOfSelections);
+				valueCommonAggregationFunctionsNumber = explorationScore.queryToMetricScoreList.get(k).get(metricCommonNumberOfAggregationFunctions);
+				valueCommonTablesNumber = explorationScore.queryToMetricScoreList.get(k).get(metricCommonNumberOfTables);
+				csvPrinter.printRecord(queryId, valueProjectionsMetric,valueTablesMetric,valueAggregationFunctionsMetric,valueSelectionsMetric,valueCommonProjectionsNumber,valueCommonSelectionsNumber,valueCommonAggregationFunctionsNumber,valueCommonTablesNumber);	            
+			}
+		}
+		csvPrinter.flush();
+```
 
 ## Authors
 
