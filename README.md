@@ -52,7 +52,7 @@ Create a new main class in the java project. Then, in this main you can start us
 
 For example let's say that my use case is to evaluate SQL exploration thanks to predefined metrics and then generate a file that gather this metrics for each query.
 
-First of all you need to instanciate an XmlSqlLoader that generate a Log object containing this SQL explorations :
+- First of all you need to instanciate an XmlSqlLoader that generate a Log object containing this SQL explorations :
 
 ```
 
@@ -61,7 +61,7 @@ Log myLog = myLoader.loadLog();
 
 ```
 
-Then instanciate all the metrics that you want for the evaluation :
+- Then instanciate all the metrics that you want for the evaluation :
 
 ```
 
@@ -76,7 +76,7 @@ CommonNumberOfTables metricCommonNumberOfTables = new CommonNumberOfTables(be);
         
 
 ```
-Add them to an object ExplorationScorer.
+- Add them to an object ExplorationScorer :
 
 ```
 Parameters params   = new Parameters();
@@ -92,7 +92,7 @@ es.addMetric(metricCommonNumberOfAggregationFunctions);
 es.addMetric(metricCommonNumberOfTables);
 ```
 
-Evaluate each query in each exploration and write it in a file :
+- Evaluate each query in each exploration and write it in a file :
 
 ```
 String SAMPLE_CSV_FILE = "sample.csv";
@@ -113,7 +113,7 @@ double valueCommonTablesNumber;
 QuerySql q;
 		
 for (Session sess : myLog.getSessionList()) {
-   Exploration e = new Exploration(be,sess);
+   			Exploration e = new Exploration(be,sess);
 			ExplorationScore explorationScore = es.score(e);
 			System.out.println(explorationScore);
 			for(int k = 0; k < explorationScore.getExploration().getWorkSession().queryList.size(); k++) {
