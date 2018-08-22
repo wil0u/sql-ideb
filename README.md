@@ -10,7 +10,7 @@ In this modified version, the java API has been changed in order to take into ac
 You have to clone this repository on your local machine and import it inside your favorite java development enviroment. Then you are ready to go. 
 
 ### Modifications
-Not all classes of the project are represented on this diagram but only important ones for the sql evaluation 
+Not all classes of the project are represented on this diagram but only important ones for the sql evaluation.
 The blue color signifies an internal modification and the green color means a complete creation.
 ![untitled diagram 1](https://user-images.githubusercontent.com/15943103/44458052-46f04980-a605-11e8-9c9b-9b1482c3f28e.png)
 
