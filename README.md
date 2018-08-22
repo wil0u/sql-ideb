@@ -14,6 +14,8 @@ Not all classes of the project are represented on this diagram but only importan
 The blue color signifies an internal modification and the green color means a complete creation.
 ![untitled diagram 1](https://user-images.githubusercontent.com/15943103/44458052-46f04980-a605-11e8-9c9b-9b1482c3f28e.png)
 
+The modification by packages : 
+
 - fr.univ_tours.li.mdjedaini.ideb.olap.query
 
 First of all an adding of an empty constructor has been made in the "Query" abstract class in order to instanciate a query without any parameters. Specially, a SQL query doesn't recquire a cube and the other constructors kind of force the initialization of a query with such parameter. 
