@@ -24,7 +24,7 @@ Then, in the same package, a "QuerySql" class has been added. It allows to repre
 
 - fr.univ_tours.li.mdjedaini.ideb.io
 
-A new class has been added to this package : XmlSqlLoader. It takes as input a xml file containing Sql explorations, transforms all this explorations into a session and all query within these exploration into a quadruplet (cf: SqlQuery). At the end it returns a Log object following the same logic than the other loaders that can be found in this package. This class implements the interface I_LogLoader.
+A new class has been added to this package : XmlSqlLoader. It takes as input a xml file containing Sql explorations, transforms all this explorations into a session list and all query within these sessions into a quadruplet (cf: SqlQuery). At the end it returns a Log object following the same logic than the other loaders that can be found in this package. This class implements the interface I_LogLoader.
 
 
 - fr.univ_tours.li.mdjedaini.ideb.struct
