@@ -2,9 +2,13 @@
 
 Initially, this project is a proof of concept realised by Mahfoud DJEDAINI in the context of his Phd. The original project is located at https://github.com/mdjedaini/ideb. 
 It basacally allows the user to create new Interactive Database Exploration systems and compare them to analoguous systems that already exist within the benchmark. This comparison is done thanks to pre-defined or user defined metrics.
+
 The project has been built in the form of a java API that the user can use as he/she wants. 
-//The original support exploration are Olap, sequence of mdx queries 
-In this modified version, the java API has been changed in order to support exploration in the form of SQL query. In other words, the modifications concern only a small part of this quite large project. A detail of the changes is described further in this documentation.
+
+The original support for the explorations are sequences of OLAP based queries. More precisely, MDX queries and ROLAP queries are abstracted in QueryTriplet with respect to the Golfarelli modeling.
+In this modified version, the java API has been changed in order to support explorations in the form of SQL query. 
+
+Therefore the modifications concern only a small part of this quite large project. A detail of the changes is described further in this documentation.
 
 ## Getting Started
 
