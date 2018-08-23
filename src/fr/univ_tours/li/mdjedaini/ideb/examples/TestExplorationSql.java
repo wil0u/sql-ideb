@@ -41,23 +41,16 @@ import fr.univ_tours.li.mdjedaini.ideb.struct.Session;
 public class TestExplorationSql {
 	public static void main(String[] args) throws IOException{
 		ArrayList<Session> sessionList = new ArrayList<Session>();
-		XmlSqlLoader myLoader = new XmlSqlLoader();
+		File inputFile = new File(
+				"C:\\Users\\wilou\\source\\test.xml");
+		XmlSqlLoader myLoader = new XmlSqlLoader(inputFile);
 		Log myLog = myLoader.loadLog();
 		Parameters params   = new Parameters();
         
-		int queryId;
-		double valueProjectionsMetric;
-		double valueTablesMetric;
-		double valueAggregationFunctionsMetric;
-		double valueSelectionsMetric;
-		double valueCommonProjectionsNumber;
-		double valueCommonSelectionsNumber;
-		double valueCommonAggregationFunctionsNumber;
-		double valueCommonTablesNumber;
-		QuerySql q;
+
 		
         BenchmarkEngine be  = new BenchmarkEngine(params);
-        String SAMPLE_CSV_FILE = "sample.csv";
+
         
         NumberOfProjections metricNumberOfProjections = new NumberOfProjections(be);
         NumberOfSelections metricNumberOfSelections = new NumberOfSelections(be);
@@ -79,14 +72,24 @@ public class TestExplorationSql {
         es.addMetric(metricCommonNumberOfAggregationFunctions);
         es.addMetric(metricCommonNumberOfTables);
         
+        String SAMPLE_CSV_FILE = "sample.csv";
         BufferedWriter writer = Files.newBufferedWriter(Paths.get(SAMPLE_CSV_FILE));
 
         CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
                 .withHeader("ID",metricNumberOfProjections.getName(),metricNumberOfTables.getName(),metricNumberOfAggregationFunctions.getName(),metricNumberOfSelections.getName(),metricCommonNumberOfProjections.getName(),metricCommonNumberOfSelections.getName(),metricCommonNumberOfAggregationFunctions.getName(),metricCommonNumberOfTables.getName()));          
-        
+		int queryId;
+		double valueProjectionsMetric;
+		double valueTablesMetric;
+		double valueAggregationFunctionsMetric;
+		double valueSelectionsMetric;
+		double valueCommonProjectionsNumber;
+		double valueCommonSelectionsNumber;
+		double valueCommonAggregationFunctionsNumber;
+		double valueCommonTablesNumber;
+		QuerySql q;
+		
 		for (Session sess : myLog.getSessionList()) {
 			Exploration e = new Exploration(be,sess);
-			//System.out.println(e.getWorkSession());
 			ExplorationScore explorationScore = es.score(e);
 			System.out.println(explorationScore);
 			for(int k = 0; k < explorationScore.getExploration().getWorkSession().queryList.size(); k++) {

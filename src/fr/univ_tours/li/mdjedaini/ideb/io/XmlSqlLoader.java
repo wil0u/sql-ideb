@@ -16,7 +16,14 @@ import fr.univ_tours.li.mdjedaini.ideb.struct.Log;
 import fr.univ_tours.li.mdjedaini.ideb.struct.Session;
 
 public class XmlSqlLoader implements I_LogLoader{
-
+	File inputFile;
+	public XmlSqlLoader() {
+		this.inputFile = new File(
+				"C:\\Users\\wilou\\source\\test.xml");
+	}
+	public XmlSqlLoader(File inputFile) {
+		this.inputFile = inputFile;
+	}
 	@Override
 	public Log loadLog() {
 		// TODO Auto-generated method stub
@@ -24,8 +31,6 @@ public class XmlSqlLoader implements I_LogLoader{
 		try {
 			int nb_requete = 0;
 			ArrayList<QuerySql> queryList = new ArrayList<QuerySql>();
-			File inputFile = new File(
-					"C:\\Users\\wilou\\source\\test.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
