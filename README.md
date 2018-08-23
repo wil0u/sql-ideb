@@ -60,7 +60,8 @@ For example let's say that my use case is to evaluate SQL exploration thanks to 
 
 ```
 
-XmlSqlLoader myLoader = new XmlSqlLoader();
+File inputFile = new File("C:\\Users\\wilou\\source\\test.xml");
+XmlSqlLoader myLoader = new XmlSqlLoader(inputFile);
 Log myLog = myLoader.loadLog();
 
 ```
