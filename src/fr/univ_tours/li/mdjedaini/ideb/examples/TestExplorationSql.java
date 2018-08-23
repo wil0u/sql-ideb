@@ -46,12 +46,7 @@ public class TestExplorationSql {
 		XmlSqlLoader myLoader = new XmlSqlLoader(inputFile);
 		Log myLog = myLoader.loadLog();
 		Parameters params   = new Parameters();
-        
-
-		
         BenchmarkEngine be  = new BenchmarkEngine(params);
-
-        
         NumberOfProjections metricNumberOfProjections = new NumberOfProjections(be);
         NumberOfSelections metricNumberOfSelections = new NumberOfSelections(be);
         NumberOfTables metricNumberOfTables = new NumberOfTables(be);
